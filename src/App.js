@@ -9,7 +9,8 @@ class App extends Component {
   
   /////// https://browntreelabs.com/scraping-sites-with-node/ //////
   componentDidMount() {
-   Axios.get('https://www.realtor.com/news/real-estate-news/').then((response)=>{console.log(response)});
+    var url = "http://anyorigin.com/go?url=" + encodeURIComponent('https://www.realtor.com/news/real-estate-news/') + '&callback=?';
+   Axios.get(url).then((response)=>{console.log(response)});
   }
 
   render() {
