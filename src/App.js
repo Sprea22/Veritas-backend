@@ -9,7 +9,7 @@ class App extends Component {
   
   /////// https://browntreelabs.com/scraping-sites-with-node/ //////
   componentDidMount() {
-    var url = "http://anyorigin.com/go?url=" + encodeURIComponent('https://www.realtor.com/news/real-estate-news/') + '&callback=?';
+    var url = "https://anyorigin.com/go?url=" + encodeURIComponent('https://www.realtor.com/news/real-estate-news/') + '&callback=?';
    Axios.get(url).then((response)=>{console.log(response)});
   }
 
