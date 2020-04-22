@@ -8,9 +8,7 @@ import Axios from 'axios';
 class App extends Component {
   
   /////// https://browntreelabs.com/scraping-sites-with-node/ //////
-  componentDidMount() {
-    Axios.get('https://www.realtor.com/news/real-estate-news/').then((response)=>{console.log(response)});
-  }
+ 
 
   render() {
     return( 
