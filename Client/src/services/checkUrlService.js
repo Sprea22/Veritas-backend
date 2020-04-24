@@ -8,6 +8,7 @@ export default {
         let response = await Api().post('/', payload)
         console.log('URL from Back End: ')
         console.log(response)
+        return response;
     }
 
 }
