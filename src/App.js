@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import CustomizedInputBase from "./SearchBarComponent.js"
 import FootBar from "./FootBar.js"
-import Axios from 'axios';
 
 
 class App extends Component {

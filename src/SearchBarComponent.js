@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,20 +18,17 @@ class SearchBar extends Component {
 
   onClick = event => {
     event.preventDefault();
-
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
     targetUrl = this.state.input_URL
-    var final_title = fetch(proxyUrl + targetUrl)
+    fetch(proxyUrl + targetUrl)
     .then(function(response) {
       return (response.text())})
       .then(function(responseText) {
             var parsedResponse = (new window.DOMParser()).parseFromString(responseText, "text/html");
             var title = parsedResponse.getElementsByTagName("title")[0].innerHTML;
             return title
-      }).then(title => this.setState({current_title : title}))
+      }).then(title => this.setState({current_title : title}))  
 
-      console.log(this.state)
-      
   }
 
   render() {
@@ -48,6 +44,7 @@ class SearchBar extends Component {
       }
     
     const input = {
+      paddingLeft: "20px",
       flex: 1,}
 
     return (
@@ -65,11 +62,8 @@ class SearchBar extends Component {
       </Paper>
       
       {console.log(this.state)}
-      <p> THE TITLE OF THE INPUT URL IS: </p>
-      <p> {this.state.current_title==="" ? 
-          (this.state.current_title) :
-          (this.state.current_title)
-      }</p>
+      <p> The title of the input URL is: </p>
+      <p> {this.state.current_title==="" ? (this.state.current_title) : (this.state.current_title)}</p>
 
     </React.Fragment>
     )
