@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, make_response
 from flask_restplus import Api, Resource, fields
-from sklearn.externals import joblib
 from flask_cors import CORS
 import numpy as np
 import sys
+import json
 
 flask_app = Flask(__name__)
 CORS(flask_app)
@@ -20,7 +20,6 @@ model = app.model('Prediction params',
 				  							   description="Input Text for the Model", 
     					  				 	   help="Input Text cannot be blank")})
 
-classifier = joblib.load('classifier.joblib')
 
 @name_space.route("/")
 class MainClass(Resource):
@@ -35,9 +34,10 @@ class MainClass(Resource):
 	@app.expect(model)		
 	def post(self):
 		try: 
-			print(request)
-			inputText = request.json
-			stringToSendBack = "This is your returning string!" + inputText
+			req = json.loads(request.data.decode("utf-8"))
+			print(type(req))
+			print(req)
+			stringToSendBack = "This is your returning string!" + req["data"]
 			response = jsonify({
 				"statusCode": 200,
 				"status": "Prediction made",

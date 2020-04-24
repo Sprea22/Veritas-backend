@@ -19,25 +19,17 @@ class SearchBar extends Component {
 
   onClick = event => {
     event.preventDefault();
+    this.sendToBE(event)
+  }
+
+  async sendToBE(event) {
     if (!this.state.input_URL) {
       this.setState({ input_URL: event.target.value })
     }
-    var title = checkUrl.sendUrl(this.state.input_URL)
+    console.log(typeof this.state.input_URL)
+    const title = await checkUrl.sendUrl(this.state.input_URL)
     this.setState({ current_title: title })
   }
-
-  /**
-   * var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-    targetUrl = this.state.input_URL
-    fetch(proxyUrl + targetUrl)
-    .then(function(response) {
-      return (response.text())})
-      .then(function(responseText) {
-            var parsedResponse = (new window.DOMParser()).parseFromString(responseText, "text/html");
-            var title = parsedResponse.getElementsByTagName("title")[0].innerHTML;
-            return title
-      }).then(title => this.setState({current_title : title}))  
-   */
 
   render() {
     const root = {
