@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify, make_response
 from flask_restplus import Api, Resource, fields
 from sklearn.externals import joblib
+from flask_cors import CORS
 import numpy as np
 import sys
 
 flask_app = Flask(__name__)
+CORS(flask_app)
+
 app = Api(app = flask_app, 
 		  version = "1.0", 
 		  title = "Veritas", 
@@ -32,6 +35,7 @@ class MainClass(Resource):
 	@app.expect(model)		
 	def post(self):
 		try: 
+			print(request)
 			inputText = request.json
 			stringToSendBack = "This is your returning string!" + inputText
 			response = jsonify({

@@ -19,6 +19,7 @@ class SearchBar extends Component {
 
   onClick = event => {
     event.preventDefault();
+    this.setState({ input_URL: event.target.value })
     var newUrl = checkUrl.sendUrl(JSON.stringify(this.state.input_URL))
     this.setState({ input_URL: newUrl })
   }
