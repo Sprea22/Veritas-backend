@@ -19,16 +19,32 @@ class SearchBar extends Component {
 
   onClick = event => {
     event.preventDefault();
-    this.sendToBE(event)
-  }
-
-  async sendToBE(event) {
+    //
     if (!this.state.input_URL) {
       this.setState({ input_URL: event.target.value })
     }
-    console.log(typeof this.state.input_URL)
-    const title = await checkUrl.sendUrl(this.state.input_URL)
-    this.setState({ current_title: title })
+    // Fetch data from input URL
+    const responseText = this.fetchData()
+    // Extract the title from the fetched site 
+    responseText.then((resText) => {
+      var parsedResponse = (new window.DOMParser()).parseFromString(resText, "text/html");
+      const fetchedTitle = parsedResponse.getElementsByTagName("title")[0].innerHTML;
+      this.setState({ current_title: fetchedTitle })
+    }).then(() => {
+      // Send the title to Back End
+      const title = checkUrl.sendUrl(this.state.current_title)
+      return title
+      // Display the result
+    }).then(title => this.setState({ current_title: title }))
+  }
+
+  async fetchData() {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    var targetUrl = proxyUrl + this.state.input_URL
+    var response = await fetch(targetUrl)
+    var responseText = response.text()
+    console.log('fetchData ', responseText)
+    return responseText
   }
 
   render() {
