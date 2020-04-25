@@ -86,4 +86,4 @@ class MainClass(Resource):
 
 if __name__ == '__main__':
 	# Threaded option to enable multiple instances for multiple user access support
-	flask_app.run(threaded=True, port=5000)
+	flask_app.run(threaded=True, port=33507)
