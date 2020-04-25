@@ -1,2 +1,0 @@
-cd Server
-flask run
