@@ -68,6 +68,7 @@ class MainClass(Resource):
 			### Pre-Processinga and prediction on the websiteDescription
 			pred, prob_pred =get_prediction_score(websiteDescription)
 
+
 			stringToSendBack = "Prediction: " + str(pred) + " _ Probability: " + str(prob_pred)
 			response = jsonify({
 				"statusCode": 200,
