@@ -46,10 +46,8 @@ def get_prediction_score(websiteDescription):
 	prediction = ML_model.predict_classes(input_data)
 	prediction_pro = ML_model.predict_proba(input_data)
 	pred = prediction[0]
-	pred2 = prediction[1]
 	prob_pred = prediction_pro[0]
-	prob_pred2 = prediction_pro[1]
-	return pred, prob_pred, pred2, prob_pred2
+	return pred, prob_pred
 
 @name_space.route("/")
 class MainClass(Resource):
@@ -68,14 +66,20 @@ class MainClass(Resource):
 			websiteDescription = req["data"]
 
 			### Pre-Processinga and prediction on the websiteDescription
-			pred, prob_pred, pred2, prob_pred2 =get_prediction_score(websiteDescription)
+			pred, prob_pred = get_prediction_score(websiteDescription)
 
+			jsonToSendBack = {
+				"analyseData" : websiteDescription,
+				"probaility" : str(rob_pred),
+				"class" : str(pred)
+			}
 
-			stringToSendBack = "Pred " + str(pred) + " prob " + str(prob_pred) + " | Pred " + str(pred2) + " prob " + str(prob_pred2)
+			#stringToSendBack = "Pred " + str(pred) + " prob " + str(prob_pred) + " | Pred " + str(pred2) + " prob " + str(prob_pred2)
+			
 			response = jsonify({
 				"statusCode": 200,
 				"status": "Prediction made",
-				"result": stringToSendBack
+				"result": jsonToSendBack
 				})
 			response.headers.add('Access-Control-Allow-Origin', '*')
 			return response
