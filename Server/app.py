@@ -4,6 +4,11 @@ from flask_cors import CORS
 import numpy as np
 import sys
 import json
+import pickle
+import pandas as pd 
+from keras.preprocessing import sequence
+from keras.preprocessing.text import Tokenizer
+from keras.models import load_model
 
 flask_app = Flask(__name__)
 CORS(flask_app)
@@ -21,6 +26,8 @@ model = app.model('Prediction params',
     					  				 	   help="Input Text cannot be blank")})
 
 
+
+
 @name_space.route("/")
 class MainClass(Resource):
 
@@ -35,9 +42,34 @@ class MainClass(Resource):
 	def post(self):
 		try: 
 			req = json.loads(request.data.decode("utf-8"))
-			print(type(req))
-			print(req)
-			stringToSendBack = "This is your returning string!" + req["data"]
+			websiteDescription = req["data"]
+
+			### Pre-Processing on the websiteDescription
+
+			# Import the Machine Learning MODEL
+			ML_model = load_model('./model.h5')
+
+			# Load the pickle file (dictionary)
+			with open('./word_dict.pickle', 'rb') as handle:
+				token = pickle.load(handle)
+
+			# Setup the dataset
+			data = pd.DataFrame([])
+			data['Headline'] = pd.Series([websiteDescription])
+			input_data = data['Headline'].fillna('')
+
+			# Text to sequence and padding
+			input_data = token.texts_to_sequences(input_data)
+			input_data = sequence.pad_sequences(input_data, maxlen = 60)
+
+			# Prediction on the classification Model
+			prediction = ML_model.predict_classes(input_data)
+			prediction_pro = ML_model.predict_proba(input_data)
+			pred = prediction[0]
+			prob_pred = prediction_pro[0]
+
+
+			stringToSendBack = "Prediction: " + str(pred) + " _ Probability: " + str(prob_pred)
 			response = jsonify({
 				"statusCode": 200,
 				"status": "Prediction made",
