@@ -40,7 +40,7 @@ def get_prediction_score(websiteDescription):
 
 	# Text to sequence and padding
 	input_data = token.texts_to_sequences(input_data)
-	input_data = sequence.pad_sequences(input_data, maxlen = 60)
+	input_data = sequence.pad_sequences(input_data, maxlen = 76)
 
 	# Prediction on the classification Model
 	prediction = ML_model.predict_classes(input_data)
