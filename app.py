@@ -49,7 +49,7 @@ def get_prediction_score(websiteDescription):
 	pred2 = prediction[1]
 	prob_pred = prediction_pro[0]
 	prob_pred2 = prediction_pro[1]
-	return pred, prob_pred
+	return pred, prob_pred, pred2, prob_pred2
 
 @name_space.route("/")
 class MainClass(Resource):
@@ -68,10 +68,10 @@ class MainClass(Resource):
 			websiteDescription = req["data"]
 
 			### Pre-Processinga and prediction on the websiteDescription
-			pred, prob_pred =get_prediction_score(websiteDescription)
+			pred, prob_pred, pred2, prob_pred2 =get_prediction_score(websiteDescription)
 
 
-			stringToSendBack = "Pred " + str(pred) + " prob " + str(prob_pred2) + " | Pred " + str(pred) + " prob " + str(prob_pred2)
+			stringToSendBack = "Pred " + str(pred) + " prob " + str(prob_pred) + " | Pred " + str(pred2) + " prob " + str(prob_pred2)
 			response = jsonify({
 				"statusCode": 200,
 				"status": "Prediction made",
