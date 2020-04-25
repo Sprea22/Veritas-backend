@@ -70,7 +70,7 @@ class MainClass(Resource):
 
 			jsonToSendBack = {
 				"analyseData" : websiteDescription,
-				"probaility" : str(rob_pred),
+				"probaility" : str(prob_pred),
 				"class" : str(pred)
 			}
 
