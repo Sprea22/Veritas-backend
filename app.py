@@ -46,7 +46,9 @@ def get_prediction_score(websiteDescription):
 	prediction = ML_model.predict_classes(input_data)
 	prediction_pro = ML_model.predict_proba(input_data)
 	pred = prediction[0]
+	pred2 = prediction[1]
 	prob_pred = prediction_pro[0]
+	prob_pred2 = prediction_pro[1]
 	return pred, prob_pred
 
 @name_space.route("/")
@@ -69,7 +71,7 @@ class MainClass(Resource):
 			pred, prob_pred =get_prediction_score(websiteDescription)
 
 
-			stringToSendBack = "Prediction: " + str(pred) + " _ Probability: " + str(prob_pred)
+			stringToSendBack = "Pred " + str(pred) + " prob " + str(prob_pred2) + " | Pred " + str(pred) + " prob " + str(prob_pred2)
 			response = jsonify({
 				"statusCode": 200,
 				"status": "Prediction made",
