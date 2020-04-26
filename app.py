@@ -45,8 +45,9 @@ def get_prediction_score(websiteDescription):
 	# Prediction on the classification Model
 	prediction = ML_model.predict_classes(input_data)
 	prediction_pro = ML_model.predict_proba(input_data)
-	pred = prediction[0]
-	prob_pred = prediction_pro[0]
+	pred = "FAKE" if int(prediction[0]) == 0 else "REAL" 
+	prob_pred = round(float(prediction_pro[0]),2)
+	
 	return pred, prob_pred
 
 @name_space.route("/")
