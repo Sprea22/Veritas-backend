@@ -33,6 +33,14 @@ def get_prediction_score(websiteDescription):
 	with open('./word_dict.pickle', 'rb') as handle:
 		token = pickle.load(handle)
 
+	# Remove the char '-' with conditions
+    position = news_txt.rfind('-')
+    position2 = news_txt.rfind('|')
+    if((len(news_txt) - position) < 20):
+      news_txt = news_txt.rsplit('-', 1)[0]
+    if((len(news_txt) - position2) < 20):
+      news_txt = news_txt.rsplit('|', 1)[0]
+
 	# Setup the dataset
 	data = pd.DataFrame([])
 	data['Headline'] = pd.Series([websiteDescription])
@@ -45,8 +53,17 @@ def get_prediction_score(websiteDescription):
 	# Prediction on the classification Model
 	prediction = ML_model.predict_classes(input_data)
 	prediction_pro = ML_model.predict_proba(input_data)
-	pred = "FAKE" if int(prediction[0]) == 0 else "REAL" 
-	prob_pred = round(float(prediction_pro[0]),2)
+	
+	# Rescale probaility between 0 and 100
+	prob_pred = int(prob_pred*100)
+	
+	# Associate to the prediction the right label
+	if(prob_pred >= 40 and prob_pred <= 60):
+		pred = "DOUBTFUL"
+	elif(pred_model == 0):
+		pred = "FAKE"
+	elif(pred_model == 1):
+		pred = "REAL"
 	
 	return pred, prob_pred
 
