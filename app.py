@@ -54,6 +54,9 @@ def get_prediction_score(websiteDescription):
 	prediction = ML_model.predict_classes(input_data)
 	prediction_pro = ML_model.predict_proba(input_data)
 	
+	pred_model = int(prediction[0])
+	prob_pred = round(float(prediction_pro[0]),2)
+
 	# Rescale probaility between 0 and 100
 	prob_pred = int(prob_pred*100)
 	
