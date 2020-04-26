@@ -34,12 +34,12 @@ def get_prediction_score(websiteDescription):
 		token = pickle.load(handle)
 		
 	# Remove the char '-' with conditions
-	position = news_txt.rfind('-')
-	position2 = news_txt.rfind('|')
-	if((len(news_txt) - position) < 20):
-		news_txt = news_txt.rsplit('-', 1)[0]
-	if((len(news_txt) - position2) < 20):
-		news_txt = news_txt.rsplit('|', 1)[0]
+	position = websiteDescription.rfind('-')
+	position2 = websiteDescription.rfind('|')
+	if((len(websiteDescription) - position) < 20):
+		websiteDescription = websiteDescription.rsplit('-', 1)[0]
+	if((len(websiteDescription) - position2) < 20):
+		websiteDescription = websiteDescription.rsplit('|', 1)[0]
 
 	# Setup the dataset
 	data = pd.DataFrame([])
