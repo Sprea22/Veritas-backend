@@ -32,14 +32,14 @@ def get_prediction_score(websiteDescription):
 	# Load the pickle file (dictionary)
 	with open('./word_dict.pickle', 'rb') as handle:
 		token = pickle.load(handle)
-
+		
 	# Remove the char '-' with conditions
-    position = news_txt.rfind('-')
-    position2 = news_txt.rfind('|')
-    if((len(news_txt) - position) < 20):
-      news_txt = news_txt.rsplit('-', 1)[0]
-    if((len(news_txt) - position2) < 20):
-      news_txt = news_txt.rsplit('|', 1)[0]
+	position = news_txt.rfind('-')
+	position2 = news_txt.rfind('|')
+	if((len(news_txt) - position) < 20):
+		news_txt = news_txt.rsplit('-', 1)[0]
+	if((len(news_txt) - position2) < 20):
+		news_txt = news_txt.rsplit('|', 1)[0]
 
 	# Setup the dataset
 	data = pd.DataFrame([])
